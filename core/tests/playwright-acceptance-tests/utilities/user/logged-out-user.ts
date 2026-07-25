@@ -134,6 +134,7 @@ const practiceSessionContainerSelector = 'practice-session-page';
 const startPracticeButtonSelector = '.e2e-test-practice-start-button';
 const subtopicListItemInPracticeTabSelector = '.e2e-test-subtopic-item';
 const tabTitleInTopicPageSelector = '.e2e-test-topic-page-tab-title';
+const promoBarTextSelector = '.e2e-test-promo-bar-text';
 
 export class LoggedOutUser extends BaseUser {
   /**
@@ -1764,6 +1765,22 @@ export class LoggedOutUser extends BaseUser {
 
     // While mouse is over pause button, the pause button doesn't change its state.
     await this.page.mouse.move(10, 10);
+  }
+
+  /**
+   * Checks if the promo bar is visible and optionally verifies its content.
+   * @param {boolean} visible - Whether the promo bar is expected to be visible.
+   * @param {string} promotionContent - The expected promotion content.
+   */
+  async expectPromoBarToBeVisible(
+    visible: boolean = true,
+    promotionContent?: string
+  ): Promise<void> {
+    await this.expectElementToBeVisible(promoBarTextSelector, visible);
+
+    if (visible && promotionContent) {
+      await this.expectTextContentToBe(promoBarTextSelector, promotionContent);
+    }
   }
 }
 

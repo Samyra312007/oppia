@@ -27,6 +27,7 @@ const backgroundBanner = '.oppia-background-image';
 const libraryBanner = '.e2e-test-library-banner';
 
 const toastMessageSelector = '.e2e-test-toast-message';
+const actionStatusMessageSelector = '.e2e-test-status-message';
 
 const VIEWPORT_WIDTH_BREAKPOINTS = testConstants.ViewportWidthBreakpoints;
 
@@ -597,6 +598,20 @@ export class BaseUser {
       await this.clickOnElementWithSelector(toastMessageSelector);
     }
     await this.expectElementToBeVisible(toastMessageSelector, false);
+  }
+
+  /**
+   * Expects the action status message to match the given expected message.
+   * @param {string} expectedMessage - The expected status message.
+   */
+  async expectActionStatusMessageToBe(expectedMessage: string): Promise<void> {
+    await this.page.waitForSelector(actionStatusMessageSelector, {
+      visible: true,
+    });
+    await this.expectTextContentToBe(
+      actionStatusMessageSelector,
+      expectedMessage
+    );
   }
 
   /**
